@@ -157,3 +157,26 @@ def change_var(inp: str):
     else:
         variables[var] = value
         print(f"Variable '{var}' changed to {value}")
+
+
+def derivative(inp: str) -> None:
+    def split_tuple(input_tuple, chunk_size=5):
+        return tuple(input_tuple[i:i+chunk_size] for i in range(0, len(input_tuple), chunk_size))
+
+
+    inp_without_dv = inp[3:].strip()
+
+    if "wr" not in inp:
+        print(diff(parse_expr(inp_without_dv)))
+    else:
+        sym = symbols(inp_without_dv[inp_without_dv.index("wr") + 3:])
+
+        if isinstance(sym, tuple):
+            sym = split_tuple(sym)
+
+            for tu in sym:
+                expr = parse_expr(inp_without_dv[:inp_without_dv.index("wr")])
+                res = tuple(f"d{symbol}: {diff(expr, symbol)}" for symbol in tu)
+                print(", ".join(res))
+        else:
+            print(diff(parse_expr(inp_without_dv[:inp_without_dv.index("wr")]), sym))

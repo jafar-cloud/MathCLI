@@ -2,7 +2,7 @@ from sympy import (
     sin, cos, tan, cot, sec, csc, asin, acos, atan, acot, asec, acsc, sinh, cosh, tanh, coth, sech, csch,
     asinh, acosh, atanh, acoth, asech, acsch, atan2, log, exp, sqrt, pi, E, oo, factorial, gamma, real_root, S,
     # Do not remove these, they are used/imported in Functions.py
-    solve, Eq, parse_expr, Expr
+    solve, Eq, parse_expr, Expr, diff, symbols
 )
 from sympy.parsing.sympy_parser import standard_transformations, implicit_multiplication_application
 

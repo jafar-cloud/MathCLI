@@ -1,0 +1,7 @@
+ev: evaluate
+sv: solve
+vr: variable
+gt: get
+cs: constant
+dl: delete
+cg: change

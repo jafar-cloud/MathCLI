@@ -172,14 +172,10 @@ def derivative(inp: str) -> None:
         except Exception as e:
             print(e)
     else:
-        sym = symbols(inp_without_dv[inp_without_dv.index("wr") + 3:])
+        sym = split_tuple(symbols(inp_without_dv[inp_without_dv.index("wr") + 3:] + ','))
 
-        if isinstance(sym, tuple):
-            sym = split_tuple(sym)
-
-            for tu in sym:
-                expr = parse_expr(inp_without_dv[:inp_without_dv.index("wr")])
-                res = tuple(f"d{symbol}: {diff(expr, symbol)}" for symbol in tu)
-                print(", ".join(res))
-        else:
-            print(diff(parse_expr(inp_without_dv[:inp_without_dv.index("wr")]), sym))
+        for tu in sym:
+            expr = parse_expr(inp_without_dv[:inp_without_dv.index("wr")])
+            res = tuple(f"d{symbol}: {diff(expr, symbol)}" for symbol in tu)
+            print(", ".join(res))
+    

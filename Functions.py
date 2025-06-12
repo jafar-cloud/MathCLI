@@ -159,7 +159,7 @@ def change_var(inp: str):
         print(f"Variable '{var}' changed to {value}")
 
 
-def derivative(inp: str) -> None:
+def deriv(inp: str) -> None:
     def split_tuple(input_tuple, chunk_size=5):
         return tuple(input_tuple[i: i + chunk_size] for i in range(0, len(input_tuple), chunk_size))
 
@@ -178,4 +178,77 @@ def derivative(inp: str) -> None:
             expr = parse_expr(inp_without_dv[:inp_without_dv.index("wr")])
             res = tuple(f"d{symbol}: {diff(expr, symbol)}" for symbol in tu)
             print(", ".join(res))
-    
+
+
+def integ(inp: str) -> None:
+    """
+    Examples
+        >>> it x
+        x**2/2
+        Don't Forget To Add The + C!
+        >>>
+        >>> it x + y wr x
+        dx: x**2/2 + x*y
+        Don't Forget To Add The + C!
+        >>>
+        >>> it x + y wr x, y
+        dx: x**2/2 + x*y, dy: x*y + y**2/2
+        Don't Forget To Add The + C!
+        >>>
+        >>> it x + y wr x fr 1 to 2
+        dx: y + 3/2
+    """
+    def split_tuple(input_tuple, chunk_size=5):
+        return tuple(input_tuple[i:i+chunk_size] for i in range(0, len(input_tuple), chunk_size))
+
+
+    inp_without_it = inp[3:].strip()
+
+    if "fr" not in inp:
+        if "wr" not in inp:
+            try:
+                print(integrate(parse_expr(inp_without_it)))
+            except Exception as e:
+                print(e)
+        else:
+            sym = split_tuple(symbols(inp_without_it[inp_without_it.index("wr") + 3:] + ','), chunk_size=3)
+
+            for tu in sym:
+                expr = parse_expr(inp_without_it[:inp_without_it.index("wr")])
+                res = tuple(f"d{symbol}: {integrate(expr, symbol)}" for symbol in tu)
+                print(", ".join(res))
+
+        print("Don't Forget To Add The + C!")
+    else:
+        if "wr" not in inp:
+            print("You must specify the variable when doing definite integration.")
+        else:
+            sym = inp_without_it[inp_without_it.index("wr") + 3: inp_without_it.index("fr")].strip() + ','
+            sym = split_tuple(symbols(sym), chunk_size=3)
+            expr = inp_without_it[:inp_without_it.index("wr")].strip()
+            string = inp_without_it[inp_without_it.index("fr") + 3:].strip()
+            start = []
+
+            for idx, char in enumerate(string):
+                if idx == string.index("to") - 1:
+                    break
+
+                start.append(char)
+
+            start = "".join(start).strip()
+            end = string[string.index("to") + 3:].strip()
+
+            try:
+                start = normalize(start)
+            except ValueError:
+                print("Invalid start value for integral.")
+            else:
+                try:
+                    end = normalize(end)
+                except ValueError:
+                    print("Invalid end value for integral.")
+                else:
+                    for tu in sym:
+                        expr = parse_expr(inp_without_it[:inp_without_it.index("wr")])
+                        res = tuple(f"d{symbol}: {integrate(expr, (symbol, start, end))}" for symbol in tu)
+                        print(", ".join(res))

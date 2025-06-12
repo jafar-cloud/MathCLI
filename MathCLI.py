@@ -1,4 +1,4 @@
-# v 1.1.1
+# v 1.2.0
 import readline
 from Functions import *
 
@@ -33,7 +33,10 @@ while True:
         change_var(user_inp)
 
     elif user_inp.startswith("dv"):
-        derivative(user_inp)
+        deriv(user_inp)
+
+    elif user_inp.startswith("it"):
+        integ(user_inp)
 
     elif user_inp in ("ex", "br"):
         print("Thanks for using MathCLI!")

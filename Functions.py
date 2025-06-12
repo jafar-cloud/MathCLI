@@ -167,7 +167,10 @@ def derivative(inp: str) -> None:
     inp_without_dv = inp[3:].strip()
 
     if "wr" not in inp:
-        print(diff(parse_expr(inp_without_dv)))
+        try:
+            print(diff(parse_expr(inp_without_dv)))
+        except Exception as e:
+            print(e)
     else:
         sym = symbols(inp_without_dv[inp_without_dv.index("wr") + 3:])
 

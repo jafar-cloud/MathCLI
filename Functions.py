@@ -161,7 +161,7 @@ def change_var(inp: str):
 
 def derivative(inp: str) -> None:
     def split_tuple(input_tuple, chunk_size=5):
-        return tuple(input_tuple[i:i+chunk_size] for i in range(0, len(input_tuple), chunk_size))
+        return tuple(input_tuple[i: i + chunk_size] for i in range(0, len(input_tuple), chunk_size))
 
 
     inp_without_dv = inp[3:].strip()

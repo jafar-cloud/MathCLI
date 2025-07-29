@@ -1,6 +1,6 @@
 # v 1.2.0
 import readline
-from Functions import *
+from functions import *
 
 
 while True:

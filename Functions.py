@@ -1,4 +1,4 @@
-from Setup import *
+from setup import *
 
 
 def normalize(num):
